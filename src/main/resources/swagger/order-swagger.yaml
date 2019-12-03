@@ -1,0 +1,258 @@
+
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: API-Order
+  description: 'Service management of the Order.'
+  contact:
+    name: Alisson
+    email: alissoncruz.si@gmail.com
+host: api.com.br
+basePath: /api/order/v1
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /order:
+    post:
+      tags:
+        - Order
+      summary: Create new order
+      description: 'Create new order.'
+      operationId: createOrder
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: newOrder
+          description: data of the new order
+          required: true
+          schema:
+            $ref: '#/definitions/NewOrder'
+      responses:
+
+        '201':
+          description: Create new resource
+          schema:
+            $ref: '#/definitions/OrderCode'
+        '401':
+          description: Authorization Failed
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '404':
+          description: Document not found
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+      security:
+        - OauthSecurity:
+            - "bearer"
+  /order/{id}:
+    get:
+      tags:
+        - Order
+      summary: Gets a Order
+      description: 'get a Order'
+      operationId: getOrder
+      produces:
+        - application/json
+      security:
+        - OauthSecurity:
+            - bearer
+      parameters:
+        - name: id
+          in: path
+          description: Code of the Order
+          required: true
+          type: integer
+          format: int64
+          x-example: 'Order-01'
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/Order'
+        '401':
+          description: Authorization Failed
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '404':
+          description: Document not found
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        default:
+          description: Unexpected Error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+    put:
+      tags:
+        - Order
+      summary: Update a Order
+      description: 'get a Order'
+      operationId: updateOrder
+      produces:
+        - application/json
+      security:
+        - OauthSecurity:
+            - bearer
+      parameters:
+        - name: id
+          in: path
+          description: Code of the Order
+          required: true
+          type: integer
+          format: int64
+          x-example: '01'
+        - name: order
+          in: body
+          description: data of the Order
+          required: true
+          schema:
+            $ref: '#/definitions/UpdateOrder'
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '404':
+          description: Not found
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '500':
+          description: Internal error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        default:
+          description: Unexpected Error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+
+
+
+securityDefinitions:
+  OauthSecurity:
+    type: oauth2
+    flow: accessCode
+    authorizationUrl: 'https://api.com.br/security/iam/v1/user-identities/login'
+    tokenUrl: 'https://api.com.br/security/iam/v1/user-identities/login'
+    scopes:
+      bearer: Client authorization token - Bearer JWT
+security:
+  - OauthSecurity:
+      - bearer
+
+definitions:
+  NewOrder:
+    description: Order data
+    type: object
+    required:
+      - name
+      - adress
+    properties:
+      name:
+        type: string
+        example: string
+        description: Name of the Order
+      address:
+        $ref: '#/definitions/Address'
+
+  Address:
+    description: Order data
+    type: object
+    required:
+      - cep
+      - street
+    properties:
+      id:
+        type: integer
+        format: int64
+        example: 01
+        description: Name of the Order
+      cep:
+        type: string
+        example: 0870900-010
+        description: Name of the Order
+      street:
+        type: string
+        example: street 45
+        description: Unique identifier of the Master Order
+
+
+  Order:
+    description: Order data
+    type: object
+    required:
+      - id
+    properties:
+      id:
+        type: integer
+        format: int64
+        example: 01
+        description: Unique identifier of the Order
+      name:
+        type: string
+        example: string
+        description: Name of the Order
+      address:
+        $ref: '#/definitions/Address'
+
+  UpdateOrder:
+    description: Order data
+    type: object
+    required:
+      - name
+    properties:
+      name:
+        type: string
+        example: string
+        description: Name of the Order
+      address:
+        $ref: '#/definitions/Address'
+
+  OrderCode:
+    description: Order data
+    type: object
+    required:
+      - id
+    properties:
+      id:
+        type: integer
+        format: int64
+        example: 01
+        description: Unique identifier of the Order
+
+
+  ErrorModel:
+    type: object
+    required:
+      - codeBuilderComplete
+      - message
+    properties:
+      code:
+        type: string
+      message:
+        type: string
