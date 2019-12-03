@@ -27,40 +27,27 @@ public class OrderController extends BaseController implements OrderApi {
 
     @Override
     public ResponseEntity<OrderCodeTO> createOrder(@Valid NewOrderTO newOrder) {
-        return null;
-    }
-
-    @Override
-    public ResponseEntity<OrderTO> getOrder(Long id) {
-        return null;
-    }
-
-    @Override
-    public ResponseEntity<Void> updateOrder(Long id, @Valid UpdateOrderTO order) {
-        return null;
-    }
-
-/*    @Override
-    public ResponseEntity<StoreCodeTO> createStore(@Valid NewStoreTO newStore) {
         System.out.println("Create store");
-        OrderEntity orderEntity = convertValue(newStore, OrderEntity.class);
-        OrderEntity entity = storeService.createStore(orderEntity);
-        StoreCodeTO response = convertValue(entity, StoreCodeTO.class);
+        OrderEntity orderEntity = convertValue(newOrder, OrderEntity.class);
+        OrderEntity entity = orderService.createStore(orderEntity);
+        OrderCodeTO response = convertValue(entity, OrderCodeTO.class);
         return new ResponseEntity<>(response, CREATED);
     }
 
     @Override
-    public ResponseEntity<StoreTO> getStore(Long id) {
+    public ResponseEntity<OrderTO> getOrder(Long id) {
         System.out.println("Get store");
-        OrderEntity entity = storeService.getStore(id);
-        StoreTO response = convertValue(entity, StoreTO.class);
+        OrderEntity entity = orderService.getStore(id);
+        OrderTO response = convertValue(entity, OrderTO.class);
         return  new ResponseEntity<>(response, OK);
     }
 
     @Override
-    public ResponseEntity<Void> updateStore(Long id, UpdateStoreTO store) {
-        storeService.updateStore(id, convertValue(store, OrderEntity.class));
+    public ResponseEntity<Void> updateOrder(Long id, @Valid UpdateOrderTO order) {
+        orderService.updateStore(id, convertValue(order, OrderEntity.class));
         System.out.println("Update store");
         return new ResponseEntity<>(OK);
-    }*/
+    }
+
+
 }

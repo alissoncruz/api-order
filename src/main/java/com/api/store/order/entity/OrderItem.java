@@ -15,15 +15,17 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity(name="address")
-@Table(name="address")
-public class Address implements Serializable {
+@Entity(name="order")
+@Table(name="order")
+public class OrderItem implements Serializable {
 
     @Id
     @GeneratedValue
     private Long id;
 
-    private String cep;
+    private String description;
 
-    private String street;
+    private Double price;
+
+    private Double quantity;
 }

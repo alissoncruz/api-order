@@ -1,6 +1,7 @@
 
 package com.api.store.order.entity;
 
+import com.api.store.order.StatusEnums;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -8,7 +9,9 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 @Data
@@ -29,7 +32,15 @@ public class OrderEntity implements Serializable {
     )
     private Address address;
 
-    private Date confirmationDate;
+    @Builder.Default
+    private Date confirmationDate = new Date();
 
-    private String status;
+    @Builder.Default
+    private StatusEnums status = StatusEnums.INITIATED;
+
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<OrderItem> orderItem = new ArrayList<>();
 }

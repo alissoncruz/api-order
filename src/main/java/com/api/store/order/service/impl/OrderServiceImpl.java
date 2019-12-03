@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-@Service("storeService")
+@Service("orderService")
 public class OrderServiceImpl implements OrderService {
 
     @Autowired
@@ -34,7 +34,6 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public OrderEntity updateStore(Long id, OrderEntity entity) {
         OrderEntity update = getStore(id);
-        update.setName(entity.getName());
 
         Address a = Address
                 .builder()
