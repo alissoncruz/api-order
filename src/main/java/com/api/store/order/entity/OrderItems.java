@@ -15,9 +15,9 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity(name="order")
-@Table(name="order")
-public class OrderItem implements Serializable {
+@Entity(name="orderItems")
+@Table(name="orderItems")
+public class OrderItems implements Serializable {
 
     @Id
     @GeneratedValue

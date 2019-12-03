@@ -42,5 +42,5 @@ public class OrderEntity implements Serializable {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<OrderItem> orderItem = new ArrayList<>();
+    private List<OrderItems> orderItems = new ArrayList<>();
 }
